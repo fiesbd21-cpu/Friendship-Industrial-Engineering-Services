@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIES - Admin & Public View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; background: #f0f2f5; }
+        header { background: #2c3e50; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        
+        /* Admin Section */
+        .admin-panel { background: white; margin: 20px; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .admin-panel h3 { margin-top: 0; color: #2c3e50; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .post-btn { background: #e67e22; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+
+        /* Public View */
+        .profile-section { text-align: center; padding: 40px 20px; background: white; margin-bottom: 20px; }
+        #display-img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid #e67e22; object-fit: cover; }
+        
+        .posts-container { max-width: 600px; margin: auto; padding: 0 20px; }
+        .post-card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .post-card h4 { margin: 0; color: #2c3e50; }
+        .post-card p { color: #555; }
+        .post-time { font-size: 12px; color: #888; }
+
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>Friendship Industrial Engineering Services</h2>
+</header>
+
+<div class="admin-panel">
+    <h3>এডমিন প্যানেল (এখান থেকে পরিবর্তন করুন)</h3>
+    <label>প্রোফাইল পিকচার পরিবর্তন:</label>
+    <input type="file" id="image-input" accept="image/*">
+    
+    <label>নতুন পোস্ট করুন:</label>
+    <textarea id="post-text" placeholder="আজকের আপডেট লিখুন..."></textarea>
+    <button class="post-btn" onclick="addPost()">পাবলিশ করুন</button>
+</div>
+
+<hr>
+
+<div class="profile-section">
+    <img src="https://via.placeholder.com/150" id="display-img" alt="Profile">
+    <h2 id="business-name">Friendship Industrial Engineering Services</h2>
+    <p><i class="fas fa-phone"></i> ০১৭৪১-৭০৪৯৩৯</p>
+</div>
+
+<div class="posts-container" id="posts-list">
+    <div class="post-card">
+        <h4>স্বাগতম!</h4>
+        <p>আমাদের নতুন ওয়েবসাইটটি ভিজিট করার জন্য ধন্যবাদ। আমরা ইন্ডাস্ট্রিয়াল সার্ভিস প্রদান করি।</p>
+        <span class="post-time">জানুয়ারি ১৪, ২০২৬</span>
+    </div>
+</div>
+
+<a href="https://wa.me/8801741704939" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    // প্রোফাইল পিকচার পরিবর্তন করার ফাংশন
+    const imageInput = document.getElementById('image-input');
+    const displayImg = document.getElementById('display-img');
+
+    imageInput.onchange = evt => {
+        const [file] = imageInput.files;
+        if (file) {
+            displayImg.src = URL.createObjectURL(file);
+        }
+    }
+
+    // নতুন পোস্ট যোগ করার ফাংশন
+    function addPost() {
+        const postText = document.getElementById('post-text').value;
+        if (postText.trim() === "") {
+            alert("অনুগ্রহ করে কিছু লিখুন!");
+            return;
+        }
+
+        const postsList = document.getElementById('posts-list');
+        const now = new Date();
+        const timeString = now.toLocaleDateString('bn-BD') + " " + now.toLocaleTimeString('bn-BD');
+
+        const newPost = document.createElement('div');
+        newPost.className = 'post-card';
+        newPost.innerHTML = `
+            <h4>নতুন আপডেট</h4>
+            <p>${postText}</p>
+            <span class="post-time">${timeString}</span>
+        `;
+
+        postsList.prepend(newPost); // নতুন পোস্ট সবার উপরে দেখাবে
+        document.getElementById('post-text').value = ""; // বক্স খালি করবে
+    }
+</script>
+
+</body>
+</html>
